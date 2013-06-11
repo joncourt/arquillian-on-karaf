@@ -8,7 +8,7 @@
  * the publisher. Infringers of copyright render themselves liable for
  * prosecution.
  */
-package org.js.samples.arquillian.karaf.blueprint;
+package org.jc.samples.arquillian.karaf.blueprint;
 
 import java.io.InputStream;
 
