@@ -7,6 +7,13 @@
 
   <dependencies>
     <dependency>
+        <groupId>org.jc.samples</groupId>
+        <artifactId>arquillian.karaf.blueprint</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.jboss.arquillian</groupId>
       <artifactId>arquillian-bom</artifactId>
       <version>1.0.3.Final</version>

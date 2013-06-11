@@ -13,7 +13,7 @@
 
   <groupId>org.jc.samples</groupId>
   <artifactId>arquillian.karaf.blueprint</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>arquillian.karaf.blueprint Blueprint Bundle</name>
