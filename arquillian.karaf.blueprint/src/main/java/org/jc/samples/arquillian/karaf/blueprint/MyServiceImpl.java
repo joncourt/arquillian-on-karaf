@@ -20,8 +20,7 @@ package org.jc.samples.arquillian.karaf.blueprint;
 
 public class MyServiceImpl implements MyService {
 
-    public String echo(String message) {
+    public String echo(final String message) {
         return "Echo processed: " + message;
     }
-
 }
