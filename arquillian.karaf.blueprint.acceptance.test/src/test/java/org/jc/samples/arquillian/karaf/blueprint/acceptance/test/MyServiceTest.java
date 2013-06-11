@@ -20,12 +20,18 @@ import org.jboss.osgi.spi.OSGiManifestBuilder;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jc.samples.arquillian.karaf.blueprint.MessageFormatter;
 import org.jc.samples.arquillian.karaf.blueprint.MyService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -35,7 +41,7 @@ public class MyServiceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         final String archiveName = "arquillian.test.jar";
-        return ShrinkWrap.create(JavaArchive.class, archiveName)
+        final JavaArchive archive = ShrinkWrap.create(JavaArchive.class, archiveName)
                 .addClasses(MyServiceTest.class)
                 .setManifest(new Asset() {
 
@@ -49,6 +55,18 @@ public class MyServiceTest {
                                 .openStream();
                     }
                 });
+
+        final JavaArchive[] resolvedArchives = Maven.resolver()
+                .loadPomFromFile("pom.xml")
+                .resolve("org.mockito:mockito-all:1.9.5")
+                .withTransitivity()
+                .as(JavaArchive.class);
+
+        for (final JavaArchive resolvedArchive : resolvedArchives) {
+            archive.merge(resolvedArchive);
+        }
+
+        return archive;
     }
 
     @Inject
@@ -69,6 +87,14 @@ public class MyServiceTest {
 
     @Test
     public void testMyService() {
-        Assert.assertEquals("Echo processed: Hello World!!", this.myService.echo("Hello World!!"));
+        final MessageFormatter formatter = Mockito.mock(MessageFormatter.class);
+        Mockito.when(formatter.format(Matchers.anyString())).then(new Answer<String>() {
+
+            public String answer(final InvocationOnMock invocation) throws Throwable {
+                return "Echo processed: " + invocation.getArguments()[0];
+            }
+        });
+
+        Assert.assertEquals("Echo processed: Hello World!!", this.myService.echo("Hello World!!", formatter));
     }
 }

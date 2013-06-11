@@ -20,6 +20,6 @@ package org.jc.samples.arquillian.karaf.blueprint;
 
 public interface MyService {
 
-    public String echo(String message);
+    public String echo(String message, MessageFormatter formatter);
 
 }
