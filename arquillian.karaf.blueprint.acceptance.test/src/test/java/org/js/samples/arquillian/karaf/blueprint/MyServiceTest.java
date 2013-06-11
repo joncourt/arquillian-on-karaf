@@ -20,10 +20,14 @@ import org.jboss.osgi.spi.OSGiManifestBuilder;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jc.samples.arquillian.karaf.blueprint.MyService;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 @RunWith(Arquillian.class)
 public class MyServiceTest {
@@ -49,9 +53,22 @@ public class MyServiceTest {
 
     @Inject
     public BundleContext context;
+    private ServiceReference<MyService> myServiceRef;
+    private MyService myService;
+
+    @Before
+    public void before() {
+        this.myServiceRef = this.context.getServiceReference(MyService.class);
+        this.myService = this.context.getService(this.myServiceRef);
+    }
+
+    @After
+    public void after() {
+        this.context.ungetService(this.myServiceRef);
+    }
 
     @Test
-    public void initialisationTest() {
-        Assert.assertNotNull(this.context);
+    public void testMyService() {
+        Assert.assertEquals("Echo Processed: Hello World!!", this.myService.echo("Hello World!!"));
     }
 }
