@@ -8,7 +8,7 @@
  * the publisher. Infringers of copyright render themselves liable for
  * prosecution.
  */
-package org.jc.samples.arquillian.karaf.blueprint;
+package org.jc.samples.arquillian.karaf.blueprint.acceptance.test;
 
 import java.io.InputStream;
 
@@ -69,6 +69,6 @@ public class MyServiceTest {
 
     @Test
     public void testMyService() {
-        Assert.assertEquals("Echo Processed: Hello World!!", this.myService.echo("Hello World!!"));
+        Assert.assertEquals("Echo processed: Hello World!!", this.myService.echo("Hello World!!"));
     }
 }
