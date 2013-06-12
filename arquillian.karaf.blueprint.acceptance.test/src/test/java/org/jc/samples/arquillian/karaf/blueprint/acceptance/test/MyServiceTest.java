@@ -35,6 +35,7 @@ public class MyServiceTest {
                 .addClasses(MyServiceTest.class)
                 .setManifest(new Asset() {
 
+                    @Override
                     public InputStream openStream() {
                         return OSGiManifestBuilder.newInstance()
                                 .addBundleSymbolicName(archiveName)
