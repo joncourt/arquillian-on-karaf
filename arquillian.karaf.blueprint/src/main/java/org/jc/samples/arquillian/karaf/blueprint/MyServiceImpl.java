@@ -20,6 +20,7 @@ package org.jc.samples.arquillian.karaf.blueprint;
 
 public class MyServiceImpl implements MyService {
 
+    @Override
     public String echo(final String message) {
         return "Echo processed: " + message;
     }
