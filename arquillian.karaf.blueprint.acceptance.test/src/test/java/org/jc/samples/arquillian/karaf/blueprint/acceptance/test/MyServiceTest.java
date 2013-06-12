@@ -45,6 +45,7 @@ public class MyServiceTest {
                 .addClasses(MyServiceTest.class)
                 .setManifest(new Asset() {
 
+                    @Override
                     public InputStream openStream() {
                         return OSGiManifestBuilder.newInstance()
                                 .addBundleSymbolicName(archiveName)
@@ -90,6 +91,7 @@ public class MyServiceTest {
         final MessageFormatter formatter = Mockito.mock(MessageFormatter.class);
         Mockito.when(formatter.format(Matchers.anyString())).then(new Answer<String>() {
 
+            @Override
             public String answer(final InvocationOnMock invocation) throws Throwable {
                 return "Echo processed: " + invocation.getArguments()[0];
             }

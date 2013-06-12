@@ -20,6 +20,7 @@ package org.jc.samples.arquillian.karaf.blueprint;
 
 public class MyServiceImpl implements MyService {
 
+    @Override
     public String echo(final String message, final MessageFormatter formatter) {
         return formatter.format(message);
     }
